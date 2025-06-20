@@ -6,3 +6,4 @@ class RegisterSchema(BaseModel):
     password: str
     name: str
     surname: str
+    teacher: bool

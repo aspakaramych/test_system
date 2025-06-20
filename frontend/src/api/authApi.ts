@@ -22,7 +22,7 @@ export const login = async (username: string, password: string): Promise<string>
 
 export const register = async (username: string, password: string, name: string, surname: string): Promise<void> => {
     try {
-        console.log({"username": username, "password": password, "name": name, "surname": surname})
+        console.log({"username": username, "password": password, "name": name, "surname": surname, "teacher": false, "classes": []})
         await authApi.post("/register", {"username": username, "password": password, "name": name, "surname": surname})
 
         toast.success('Регистрация успешна')

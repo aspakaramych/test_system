@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
@@ -11,3 +11,4 @@ class User(Base):
     password = Column(String, index=True)
     name = Column(String, index=True)
     surname = Column(String, index=True)
+    teacher = Column(Boolean, index=True)
