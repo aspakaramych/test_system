@@ -1,0 +1,9 @@
+fastapi
+pydantic
+sqlalchemy
+uvicorn
+pydantic-settings
+asyncpg
+passlib[bcrypt]
+pyjwt
+python-jose[cryptography]

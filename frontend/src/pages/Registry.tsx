@@ -2,10 +2,13 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import * as React from "react";
 import {register} from "../api/authApi.ts";
+import "../styles/registerStyle.css"
 
 function Registry() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [name, setName] = useState("")
+    const [surname, setSurname] = useState("")
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
@@ -15,7 +18,7 @@ function Registry() {
         setIsLoading(true)
 
         try {
-            await register(username, password);
+            await register(username, password, name, surname);
             navigate("/login")
         } catch (error) {
 
@@ -25,7 +28,7 @@ function Registry() {
     }
     return (
         <>
-            <div>
+            <div className={"register-form"}>
                 <h2>Регистрация</h2>
                 <form onSubmit={handleSubmit}>
                     <input type={"text"}
@@ -38,6 +41,18 @@ function Registry() {
                            placeholder={"Пароль"}
                            value={password}
                            onChange={(e) => setPassword(e.target.value)}
+                           required/>
+                    <br/>
+                    <input type={"text"}
+                           placeholder={"Имя"}
+                           value={name}
+                           onChange={(e) => setName(e.target.value)}
+                           required/>
+                    <br/>
+                    <input type={"text"}
+                           placeholder={"Фамилия"}
+                           value={surname}
+                           onChange={(e) => setSurname(e.target.value)}
                            required/>
                     <br/>
                     <button type={"submit"} disabled={isLoading}>
