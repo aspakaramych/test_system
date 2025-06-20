@@ -28,5 +28,18 @@ services:
       - ./services/auth/app/.env
     depends_on:
       - db
+
+  classes:
+    build:
+      context: ./services/classes
+      dockerfile: Dockerfile
+    image: classes
+    container_name: classes-container
+    ports:
+      - "16000:8000"
+    env_file:
+      - ./services/classes/app/.env
+    depends_on:
+      - db
 volumes:
   postgres_data:

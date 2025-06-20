@@ -1,3 +1,5 @@
+from typing import List
+
 from pydantic import BaseModel
 
 
@@ -7,3 +9,4 @@ class RegisterSchema(BaseModel):
     name: str
     surname: str
     teacher: bool
+    classes: List[int]

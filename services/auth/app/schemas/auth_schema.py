@@ -1,3 +1,5 @@
+from typing import List
+
 from pydantic import BaseModel
 
 
@@ -11,3 +13,4 @@ class UserFromDb(BaseModel):
     name: str
     surname: str
     teacher: bool
+    classes: List[int]

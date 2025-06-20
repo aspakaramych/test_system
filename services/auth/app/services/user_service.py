@@ -31,7 +31,9 @@ async def get_user(db: AsyncSession, user: UserSchema) -> UserFromDb:
         username=user_db.username,
         password=user_db.password,
         name=user_db.name,
-        surname=user_db.surname
+        surname=user_db.surname,
+        teacher=user_db.teacher,
+        classes=user_db.classes,
     )
 
 async def authenticate_user(db: AsyncSession, user: UserSchema):

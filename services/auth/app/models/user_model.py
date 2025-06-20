@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy.dialects.postgresql.array import ARRAY
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
@@ -12,3 +13,4 @@ class User(Base):
     name = Column(String, index=True)
     surname = Column(String, index=True)
     teacher = Column(Boolean, index=True)
+    classes = Column(ARRAY(Integer), index=True)
