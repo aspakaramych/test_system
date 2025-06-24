@@ -17,7 +17,7 @@ function App() {
                         <HomeScreen />
                     </PrivateRoute>
                 }/>
-                <Route path={"/account/{id}"} element={<AccountPage/>}></Route>
+                <Route path={`/account/:id`} element={<AccountPage/>}></Route>
             </Routes>
         </BrowserRouter>
     )

@@ -20,8 +20,8 @@ function Auth() {
         setIsLoading(true)
 
         try {
-            const token = await login(username, password);
-            loginHook(token)
+            const [token, id] = await login(username, password);
+            loginHook(token, id)
             navigate("/")
         } catch (error) {
 

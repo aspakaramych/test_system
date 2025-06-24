@@ -1,6 +1,6 @@
-from typing import List
+from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, model_validator
 
 
 class RegisterSchema(BaseModel):
@@ -9,4 +9,10 @@ class RegisterSchema(BaseModel):
     name: str
     surname: str
     teacher: bool
-    classes: List[int]
+    classes: Optional[list[int]] = None
+
+    @model_validator(mode='after')
+    def set_defaults(self):
+        if self.classes is None:
+            self.classes = []
+        return self

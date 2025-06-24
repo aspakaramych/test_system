@@ -16,7 +16,7 @@ async def auth(user_data: UserSchema, db: AsyncSession = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     access_token = create_access_token(data={"sub": user_data.username})
-    return {"access_token": access_token}
+    return {"access_token": access_token, "id": str(user.id)}
 
 @router.post("/register")
 async def register_user(user: RegisterSchema, db: AsyncSession = Depends(get_db)):

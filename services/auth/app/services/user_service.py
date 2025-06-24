@@ -1,3 +1,5 @@
+import uuid
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -9,12 +11,16 @@ from ..schemas.register_schema import RegisterSchema
 
 async def create_user(db: AsyncSession, user: RegisterSchema):
     new_user = User(
+        id=uuid.uuid4(),
         name=user.name,
         surname=user.surname,
         password=pwd_context.hash(user.password),
         username=user.username,
+        teacher=user.teacher,
+        classes=user.classes or [],
     )
     db.add(new_user)
+    await db.flush()
     await db.commit()
     await db.refresh(new_user)
     return new_user
@@ -28,6 +34,7 @@ async def get_user(db: AsyncSession, user: UserSchema) -> UserFromDb:
         return None
 
     return UserFromDb(
+        id=str(user_db.id),
         username=user_db.username,
         password=user_db.password,
         name=user_db.name,

@@ -1,3 +1,4 @@
+import uuid
 from typing import List
 
 from pydantic import BaseModel
@@ -8,6 +9,7 @@ class UserSchema(BaseModel):
     password: str
 
 class UserFromDb(BaseModel):
+    id: str
     username: str
     password: str
     name: str
