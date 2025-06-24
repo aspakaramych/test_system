@@ -48,3 +48,9 @@ async def authenticate_user(db: AsyncSession, user: UserSchema):
     if not user or not verify_password(user.password, userFromDb.password):
         return None
     return userFromDb
+
+async def get_allow(db: AsyncSession, id: str) -> bool:
+    query = select(User).where(User.id == id)
+    user = await db.execute(query)
+    user = user.scalars().first()
+    return user.teacher

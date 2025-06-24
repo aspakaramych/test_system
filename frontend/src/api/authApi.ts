@@ -10,6 +10,10 @@ interface LoginResponse {
     id: string
 }
 
+interface isAllowResponse {
+    isAllow: boolean
+}
+
 export const login = async (username: string, password: string): Promise<[string, string]> => {
     try {
         const response = await authApi.post<LoginResponse>("/login", {username, password})
@@ -23,7 +27,6 @@ export const login = async (username: string, password: string): Promise<[string
 
 export const register = async (username: string, password: string, name: string, surname: string): Promise<void> => {
     try {
-        console.log({"username": username, "password": password, "name": name, "surname": surname, "teacher": false, "classes": []})
         await authApi.post("/register", {
             "classes": [],
             "name": name,
@@ -37,5 +40,17 @@ export const register = async (username: string, password: string, name: string,
     } catch (error) {
         toast.error('Ошибка регистрации')
         throw error;
+    }
+}
+
+export const isAllow = async (id: string) : Promise<boolean> => {
+    try{
+        const response = await authApi.post<isAllowResponse>("/allow", {
+            "id": id
+        })
+        return response.data.isAllow;
+    } catch (error){
+        toast.error('Ошибка сервера')
+        throw error
     }
 }

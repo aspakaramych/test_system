@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/modalStyle.css"
 
 interface ModalProps {
     isOpen: boolean;
@@ -11,14 +12,14 @@ const Modal : React.FC<ModalProps> = ({isOpen, onClose, onConfirm, message}) => 
     if (!isOpen) return null;
 
     return (
-        <div>
-            <div>
+        <div className={"modal-overlay"}>
+            <div className={"modal-content"}>
                 {typeof message === "string" ? (
                     <p>{message}</p>
                 ) : (
-                    <form>{message}</form>
+                    <form className={"modal-form"}>{message}</form>
                 )}
-                <div>
+                <div className={"modal-button"}>
                     <button onClick={onClose}>Отмена</button>
                     <button onClick={onConfirm}>Подтвердить</button>
                 </div>

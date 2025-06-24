@@ -2,8 +2,8 @@ body {
     margin: 0;
     min-height: 100vh;
     display: flex;
-    justify-content: center;     /* Горизонтальное центрирование */
-    align-items: center;         /* Вертикальное центрирование */
-    background-color: #242424;   /* Темный фон */
+    justify-content: center;
+    align-items: center;
+    background-color: #1e1e1e;
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
