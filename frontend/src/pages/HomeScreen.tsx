@@ -1,10 +1,10 @@
 import Navbar from "../components/NavBar.tsx";
 import React, {useState} from "react";
 import Modal from "../components/Modal.tsx";
-import {onCreateClass} from "../hooks/onCreate.ts";
 import "../styles/homepageStyle.css"
 import {isAllow} from "../api/authApi.ts";
 import {toast} from "react-toastify";
+import {createClassApi} from "../api/classesApi.ts";
 
 function HomeScreen() {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -19,6 +19,17 @@ function HomeScreen() {
             ...prev,
             [name]: value,
         }))
+    }
+
+    const createClass = async () => {
+        const id = localStorage.getItem("id");
+        if (!id) {
+            console.error("ID не найден");
+            return;
+        }
+        const response = await createClassApi(id, Class.title, Class.description);
+        setIsModalOpen(false)
+        console.log(response)
     }
 
     const handleCreateClass = async () => {
@@ -47,7 +58,7 @@ function HomeScreen() {
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                onConfirm={onCreateClass}
+                onConfirm={createClass}
                 message={
                     <form>
                         <label>
