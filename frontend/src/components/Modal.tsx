@@ -17,7 +17,7 @@ const Modal : React.FC<ModalProps> = ({isOpen, onClose, onConfirm, message}) => 
                 {typeof message === "string" ? (
                     <p>{message}</p>
                 ) : (
-                    <form className={"modal-form"}>{message}</form>
+                    <div className={"modal-form"}>{message}</div>
                 )}
                 <div className={"modal-button"}>
                     <button onClick={onClose}>Отмена</button>

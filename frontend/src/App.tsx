@@ -5,6 +5,7 @@ import PrivateRoute from "./components/PrivateRoute.tsx";
 import Registry from "./pages/Registry.tsx";
 import HomeScreen from "./pages/HomeScreen.tsx";
 import AccountPage from "./pages/AccountPage.tsx";
+import TasksPage from "./pages/TasksPage.tsx";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                     </PrivateRoute>
                 }/>
                 <Route path={`/account/:id`} element={<AccountPage/>}></Route>
+                <Route path={":id/tasks"} element={<TasksPage/>}></Route>
             </Routes>
         </BrowserRouter>
     )

@@ -8,6 +8,8 @@ import {createClassApi} from "../api/classesApi.ts";
 
 function HomeScreen() {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isIdModalOpen, setIsIdModalOpen] = useState(false)
+    const [responseId, setIsResponseId] = useState("")
     const [Class, setClass] = useState({
         title: "",
         description: "",
@@ -29,7 +31,8 @@ function HomeScreen() {
         }
         const response = await createClassApi(id, Class.title, Class.description);
         setIsModalOpen(false)
-        console.log(response)
+        setIsIdModalOpen(true)
+        setIsResponseId(response)
     }
 
     const handleCreateClass = async () => {
@@ -62,17 +65,26 @@ function HomeScreen() {
                 message={
                     <form>
                         <label>
-                            Название
+                            Название Класса
                             <input type={"text"} name={"title"} value={Class.title} onChange={handleChange} required/>
                         </label>
                         <label>
-                            Описание
+                            Описание(опционально)
                             <input type={"text"} name={"description"} value={Class.description}
                                    onChange={handleChange}/>
                         </label>
                     </form>
                 }
             />
+            <Modal
+                isOpen={isIdModalOpen}
+                onClose={() => setIsIdModalOpen(false)}
+                onConfirm={() => setIsIdModalOpen(false)}
+                message={
+                    <>
+                        <p>{responseId}</p>
+                    </>
+                }/>
 
         </>
     )

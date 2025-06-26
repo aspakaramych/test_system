@@ -1,3 +1,6 @@
+import logging
+
+import httpx
 from fastapi import HTTPException
 
 from fastapi import APIRouter
@@ -9,11 +12,45 @@ from ..schemas.class_schema import ClassSchema
 from ..services.classes_service import create_class_service
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 @router.post("/create")
 async def create_class(class_entity: ClassSchema, db: AsyncSession = Depends(get_db)):
     new_class = await create_class_service(db, class_entity)
     if new_class is None:
         raise HTTPException(status_code=400, detail="Ошибка создания")
-    return {"id": str(new_class.id)}
+
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                "http://auth:8000/set_class",
+                json={"user_id": str(class_entity.user_id), "class_id": str(new_class.id)}
+            )
+
+        if response.status_code != 200:
+            logger.error(f"External service returned error: {response.status_code}, body: {response.text}")
+            raise HTTPException(status_code=response.status_code, detail=f"Внешний сервис вернул ошибку: {response.status_code}")
+
+        try:
+            data = response.json()
+        except httpx.ResponseNotReadError as e:
+            logger.exception("Ошибка чтения ответа от сервиса")
+            raise HTTPException(status_code=500, detail="Ошибка чтения ответа от сервиса") from e
+
+        if data.get("status") != "ok":
+            logger.warning(f"Сервис вернул неожиданный статус: {data}")
+            raise HTTPException(status_code=500, detail="Сервис вернул статус: не ok")
+
+        return {"id": str(new_class.id)}
+
+    except httpx.RequestError as e:
+        logger.exception("Ошибка сети при обращении к сервису")
+        raise HTTPException(status_code=500, detail=f"Ошибка сети при обращении к сервису: {str(e)}") from e
+    except Exception as e:
+        logger.exception("Неизвестная внутренняя ошибка")
+        raise HTTPException(status_code=500, detail=f"Внутренняя ошибка: {str(e)}") from e
+
+@router.post("/get_classes")
+async def get_classes(db: AsyncSession = Depends(get_db)):
+    pass
 

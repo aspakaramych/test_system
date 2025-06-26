@@ -12,6 +12,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - app-network
 
   frontend:
     build:
@@ -21,6 +23,8 @@ services:
     container_name: frontend-container
     ports:
       - "14000:5173"
+    networks:
+      - app-network
 
   pgadmin:
     image: dpage/pgadmin4
@@ -34,6 +38,8 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+    networks:
+      - app-network
 
   auth:
     build:
@@ -48,6 +54,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - app-network
 
   classes:
     build:
@@ -62,7 +70,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - app-network
 
 volumes:
   postgres_data:
   pgadmin-data:
+
+networks:
+  app-network:
+    driver: bridge

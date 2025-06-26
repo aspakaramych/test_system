@@ -9,15 +9,18 @@ function ClassCard(classentity: classEntity) {
                 <h2>{classentity.title}</h2>
             </div>
             <div>
+                <h3>{classentity.description}</h3>
+            </div>
+            <div>
                 <div>
-                    <button type={"button"} onClick={() => navigate("/")}>Задачи</button>
+                    <button type={"button"} onClick={() => navigate(`/${classentity.id}/tasks`)}>Задачи</button>
                 </div>
                 <div>
-                    <span>Очередь</span>
+                    <button type={"button"} onClick={() => navigate(`/${classentity.id}/queue`)}>Очередь</button>
                 </div>
             </div>
             <div>
-                <span>Пользователи</span>
+                <button type={"button"} onClick={() => navigate(`/${classentity.id}/users`)}>Пользователи</button>
             </div>
         </div>
     )

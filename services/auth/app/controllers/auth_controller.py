@@ -5,9 +5,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..auth.auth_service import create_access_token
 from ..database import get_db
 from ..schemas.auth_schema import UserSchema
-from ..schemas.id_schema import IdSchema
+from ..schemas.id_schema import IdSchema, IdClassSchema
 from ..schemas.register_schema import RegisterSchema
-from ..services.user_service import authenticate_user, create_user, get_allow
+from ..services.user_service import authenticate_user, create_user, get_allow, set_class_service
 
 router = APIRouter()
 
@@ -29,3 +29,8 @@ async def register_user(user: RegisterSchema, db: AsyncSession = Depends(get_db)
 async def get_allow_controller(id: IdSchema, db: AsyncSession = Depends(get_db)):
     allow = await get_allow(db, id.id)
     return {"isAllow": allow}
+
+@router.post("/set_class")
+async def set_class(id: IdClassSchema, db: AsyncSession = Depends(get_db)):
+    await set_class_service(db, id)
+    return {"status": "ok"}

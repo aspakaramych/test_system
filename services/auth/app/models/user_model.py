@@ -15,4 +15,4 @@ class User(Base):
     name = Column(String, index=True)
     surname = Column(String, index=True)
     teacher = Column(Boolean, index=True)
-    classes = Column(ARRAY(Integer), index=True)
+    classes = Column(ARRAY(UUID(as_uuid=True)), index=True, default=uuid.uuid4)

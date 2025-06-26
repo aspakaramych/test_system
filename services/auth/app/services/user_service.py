@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..auth.auth_service import pwd_context, verify_password
 from ..models.user_model import User
 from ..schemas.auth_schema import UserSchema, UserFromDb
+from ..schemas.id_schema import IdClassSchema
 from ..schemas.register_schema import RegisterSchema
 
 
@@ -54,3 +55,23 @@ async def get_allow(db: AsyncSession, id: str) -> bool:
     user = await db.execute(query)
     user = user.scalars().first()
     return user.teacher
+
+async def set_class_service(db: AsyncSession, user: IdClassSchema):
+    query = select(User).where(User.id == user.user_id)
+    result = await db.execute(query)
+    user_db = result.scalars().first()
+
+    if not user_db:
+        raise ValueError("User not found")
+
+    if not user_db.classes:
+        user_db.classes = []
+
+    user_db.classes.append(user.class_id)
+
+    await db.commit()
+    await db.refresh(user_db)
+
+    return user_db
+
+    
