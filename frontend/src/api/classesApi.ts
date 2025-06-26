@@ -6,6 +6,10 @@ const classesApi = axios.create({
     baseURL: "http://localhost:16000"
 });
 
+const userApi = axios.create({
+    baseURL: "http://localhost:15000"
+})
+
 interface getClassesResponse {
     classes: Array<classEntity>
 }
@@ -16,7 +20,7 @@ interface createClassResponse {
 
 export const getClasses = async (id: string): Promise<Array<classEntity>> => {
     try {
-        const response = await classesApi.post<getClassesResponse>("/", {"id": id});
+        const response = await userApi.post<getClassesResponse>("/get_class", {"id": id});
         return response.data.classes
     } catch (error) {
         toast.error("Ошибка получения классов");

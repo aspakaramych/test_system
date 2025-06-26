@@ -1,19 +1,26 @@
 import Navbar from "../components/NavBar.tsx";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Modal from "../components/Modal.tsx";
 import "../styles/homepageStyle.css"
 import {isAllow} from "../api/authApi.ts";
 import {toast} from "react-toastify";
-import {createClassApi} from "../api/classesApi.ts";
+import {createClassApi, getClasses} from "../api/classesApi.ts";
+import ClassCard from "../components/ClassCard.tsx";
+import type {classEntity} from "../entities/classEntity.ts";
 
 function HomeScreen() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isIdModalOpen, setIsIdModalOpen] = useState(false)
     const [responseId, setIsResponseId] = useState("")
+    const [classes, setClasses] = useState<classEntity[]>([]);
     const [Class, setClass] = useState({
         title: "",
         description: "",
     })
+
+    useEffect(() => {
+        fetchClasses()
+    }, [])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -35,6 +42,22 @@ function HomeScreen() {
         setIsResponseId(response)
     }
 
+    const fetchClasses = async () => {
+        try {
+            const id = localStorage.getItem("id")
+            if (!id) {
+                console.error("ID не найден");
+                return;
+            }
+            const response = await getClasses(id)
+            console.log(response.classes)
+            setClasses(response.classes)
+            console.log(classes)
+        } catch (error){
+            toast.error("Ошибка загрузки классов")
+        }
+    }
+
     const handleCreateClass = async () => {
         const id = localStorage.getItem("id");
 
@@ -43,7 +66,7 @@ function HomeScreen() {
             return;
         }
         const allow = await isAllow(id);
-        if (allow){
+        if (allow) {
             setIsModalOpen(true)
         } else {
             toast.error("Вы не можете создать класс")
@@ -85,7 +108,20 @@ function HomeScreen() {
                         <p>{responseId}</p>
                     </>
                 }/>
-
+            <div>
+                {classes.length > 0 ? (
+                    classes.map((classEntityEl) => (
+                        <ClassCard
+                            key={classEntityEl.id}
+                            id={classEntityEl.id}
+                            title={classEntityEl.title}
+                            description={classEntityEl.description}
+                        />
+                    ))
+                ) : (
+                    <p>Нет доступных классов</p>
+                )}
+            </div>
         </>
     )
 }

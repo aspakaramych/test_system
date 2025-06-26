@@ -7,3 +7,4 @@ asyncpg
 passlib[bcrypt]
 pyjwt
 python-jose[cryptography]
+httpx

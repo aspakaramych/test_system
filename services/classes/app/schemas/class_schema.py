@@ -7,10 +7,10 @@ class ClassSchema(BaseModel):
     description: str
 
 class GetClassRequest(BaseModel):
-    user_id: str
+    classes_id: list[str]
 
 class GetClassSchema(BaseModel):
-    class_id: str
+    id: str
     title: str
     description: str
 

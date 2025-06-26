@@ -8,8 +8,8 @@ from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
-from ..schemas.class_schema import ClassSchema
-from ..services.classes_service import create_class_service
+from ..schemas.class_schema import ClassSchema, GetClassRequest
+from ..services.classes_service import create_class_service, get_class_service
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -51,6 +51,9 @@ async def create_class(class_entity: ClassSchema, db: AsyncSession = Depends(get
         raise HTTPException(status_code=500, detail=f"Внутренняя ошибка: {str(e)}") from e
 
 @router.post("/get_classes")
-async def get_classes(db: AsyncSession = Depends(get_db)):
-    pass
+async def get_classes(classes_id: GetClassRequest, db: AsyncSession = Depends(get_db)):
+    classes = await get_class_service(db, classes_id)
+    if classes is None:
+        raise HTTPException(status_code=500, detail="Ошибка на стороне сервера")
 
+    return {"classes": classes}

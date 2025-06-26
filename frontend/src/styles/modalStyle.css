@@ -52,8 +52,8 @@
 }
 
 .modal-button button:first-child {
-    background: #ccc;
-    color: black;
+    background: #ff0000;
+    color: white;
 }
 
 .modal-button button:last-child {
