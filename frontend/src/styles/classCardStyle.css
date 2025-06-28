@@ -1,0 +1,88 @@
+.class-card {
+    width: calc(50% - 30px);
+    max-width: 600px;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.class-card:hover {
+    background-color: #383838;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.class-card-header {
+    margin-bottom: 15px;
+}
+
+
+.class-card-title {
+    text-align: center;
+    color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+
+.class-card-description-container {
+    margin-bottom: 15px;
+}
+
+
+.class-card-description {
+    text-align: center;
+    color: #cccccc;
+    margin: 0;
+    padding: 0;
+}
+
+.class-card-buttons-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+
+.class-card-button-wrapper {
+    flex-grow: 1;
+}
+
+
+
+.class-card-single-button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+
+.class-card-button {
+    background-color: #444444;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.class-card-button:hover {
+    background-color: #555555;
+    transform: translateY(-2px);
+}

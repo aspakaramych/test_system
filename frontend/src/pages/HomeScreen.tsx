@@ -108,7 +108,7 @@ function HomeScreen() {
                         <p>{responseId}</p>
                     </>
                 }/>
-            <div>
+            <div className={"class-card-list"}>
                 {classes.length > 0 ? (
                     classes.map((classEntityEl) => (
                         <ClassCard
