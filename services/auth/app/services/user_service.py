@@ -8,7 +8,10 @@ from ..models.user_model import User
 from ..schemas.auth_schema import UserSchema, UserFromDb
 from ..schemas.id_schema import IdClassSchema, IdSchema
 from ..schemas.register_schema import RegisterSchema
+import logging
 
+logging.basicConfig()
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO) # или DEBUG для большего количества деталей
 
 async def create_user(db: AsyncSession, user: RegisterSchema):
     new_user = User(
@@ -67,12 +70,16 @@ async def set_class_service(db: AsyncSession, user: IdClassSchema):
     if not user_db.classes:
         user_db.classes = []
 
-    user_db.classes.append(user.class_id)
+    current_classes = user_db.classes if user_db.classes is not None else []
+    new_class_uuid = uuid.UUID(str(user.class_id))
+    if new_class_uuid not in current_classes:
+        current_classes.append(new_class_uuid)
 
+    user_db.classes = current_classes
+    print(user_db.classes)
+    db.add(user_db)
     await db.commit()
     await db.refresh(user_db)
-
-    return user_db
 
 async def get_classes_service(db: AsyncSession, user: IdSchema):
     query = select(User).where(User.id == user.id)

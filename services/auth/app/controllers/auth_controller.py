@@ -41,6 +41,7 @@ async def get_allow_controller(id: IdSchema, db: AsyncSession = Depends(get_db))
 @router.post("/set_class")
 async def set_class(id: IdClassSchema, db: AsyncSession = Depends(get_db)):
     await set_class_service(db, id)
+
     return {"status": "ok"}
 
 
