@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..models.class_model import ClassModel
-from ..schemas.class_schema import ClassSchema, GetClassRequest, GetClassSchema
+from ..schemas.class_schema import ClassSchema, GetClassRequest, GetClassSchema, GetTasksRequest
 
 
 async def create_class_service(db: AsyncSession, class_entity: ClassSchema):
@@ -36,4 +36,9 @@ async def get_class_service(db: AsyncSession, class_entity: GetClassRequest):
         ))
     return response
 
-
+async def get_tasks_service(db: AsyncSession, class_entity: GetTasksRequest):
+    idx = class_entity.tasks_id
+    query = select(ClassModel).where(ClassModel.id == idx)
+    classes = await db.execute(query)
+    classesDb = classes.scalars().first()
+    return [str(i) for i in classesDb.tasks]

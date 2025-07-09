@@ -32,7 +32,7 @@ function Auth() {
 
     return (
         <>
-            <div>
+
                 <div className={"auth-form"}>
                     <h2>Вход</h2>
                     <form onSubmit={handleSubmit}>
@@ -56,7 +56,7 @@ function Auth() {
                         Нет аккаунта? <a href={"/register"}>Зарегистрироваться</a>
                     </p>
                 </div>
-            </div>
+
         </>
     )
 }

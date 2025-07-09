@@ -17,3 +17,6 @@ class GetClassSchema(BaseModel):
 class GetClassesResponse(BaseModel):
     classes: list[GetClassSchema]
 
+class GetTasksRequest(BaseModel):
+    class_id: str
+

@@ -14,6 +14,10 @@ interface isAllowResponse {
     isAllow: boolean
 }
 
+interface SetClassResponse {
+    status: string
+}
+
 export const login = async (username: string, password: string): Promise<[string, string]> => {
     try {
         const response = await authApi.post<LoginResponse>("/login", {username, password})
@@ -49,6 +53,19 @@ export const isAllow = async (id: string) : Promise<boolean> => {
             "id": id
         })
         return response.data.isAllow;
+    } catch (error){
+        toast.error('Ошибка сервера')
+        throw error
+    }
+}
+
+export const setClassApi = async (user_id: string, class_id: string) : Promise<string> => {
+    try{
+        const response = await authApi.post<SetClassResponse>("/set_class", {
+            "user_id": user_id,
+            "class_id": class_id
+        })
+        return response.data.status;
     } catch (error){
         toast.error('Ошибка сервера')
         throw error
