@@ -44,7 +44,7 @@ async def get_user(db: AsyncSession, user: UserSchema) -> UserFromDb:
         name=user_db.name,
         surname=user_db.surname,
         teacher=user_db.teacher,
-        classes=user_db.classes,
+        classes=[str(i) for i in user_db.classes],
     )
 
 async def authenticate_user(db: AsyncSession, user: UserSchema):
