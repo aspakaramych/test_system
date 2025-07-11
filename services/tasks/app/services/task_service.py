@@ -3,8 +3,8 @@ import uuid
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from services.tasks.app.models.task_model import Task
-from services.tasks.app.schemas.task_schemas import TasksRequest, TaskResponse
+from ..models.task_model import Task
+from ..schemas.task_schemas import TasksRequest, TaskResponse
 
 
 async def get_task_service(db: AsyncSession, tasks_idxes: TasksRequest):

@@ -18,6 +18,15 @@ interface createClassResponse {
     id: string
 }
 
+export interface TaskResponse {
+    id: string
+    title: string
+}
+
+interface Tasks {
+    tasks: TaskResponse[]
+}
+
 export const getClasses = async (id: string): Promise<Array<classEntity>> => {
     try {
         const response = await userApi.post<getClassesResponse>("/get_class", {"id": id});
@@ -34,6 +43,16 @@ export const createClassApi = async (id: string, title: string, descriprion: str
         return response.data.id
     } catch (error) {
         toast.error("Ошибка создания класса")
+        throw error
+    }
+}
+
+export const getTasks = async (class_id: string) : Promise<TaskResponse[]> => {
+    try {
+        const response = await classesApi.post<Tasks>("/get_tasks", {"class_id": class_id})
+        return response.data.tasks
+    } catch (error) {
+        toast.error("Ошибка получения классов")
         throw error
     }
 }

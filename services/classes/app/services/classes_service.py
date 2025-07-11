@@ -37,7 +37,7 @@ async def get_class_service(db: AsyncSession, class_entity: GetClassRequest):
     return response
 
 async def get_tasks_service(db: AsyncSession, class_entity: GetTasksRequest):
-    idx = class_entity.tasks_id
+    idx = class_entity.class_id
     query = select(ClassModel).where(ClassModel.id == idx)
     classes = await db.execute(query)
     classesDb = classes.scalars().first()

@@ -3,7 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": ["http://localhost:15000", "http://localhost:16000"],
+  "proxy": [
+    "http://localhost:15000",
+    "http://localhost:16000"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -12,6 +15,7 @@
   },
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
+    "@tanstack/react-query": "^5.82.0",
     "axios": "^1.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
